@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KY Keyboard - 聯繫我們</title>
+    <style>
+        /* 全局樣式 酷炫黑白風 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.95) 90%);
+        }
+
+        /* 頂部導航欄 */
+        .header {
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+        }
+
+        /* 品牌Logo容器 */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        /* 品牌圖標 */
+        .brand-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.4s ease;
+        }
+
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(120%); /* 黑白處理匹配整體風格 */
+            transition: transform 0.4s ease;
+        }
+
+        .logo-container:hover .brand-icon {
+            transform: scale(1.05);
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
+
+        .logo-container:hover .brand-icon img {
+            transform: scale(1.1);
+        }
+
+        /* Logo文字 */
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .logo-text::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, #fff, #888);
+            transition: width 0.5s ease;
+        }
+
+        .logo-container:hover .logo-text::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-toggle:hover {
+            transform: rotate(90deg);
+        }
+
+        /* 背景裝飾 */
+        .bg-decoration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1935&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: -1;
+            filter: grayscale(100%);
+            border-radius: 8px;
+        }
+
+        /* 核心聯繫模組 */
+        .contact-container {
+            max-width: 1200px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            letter-spacing: 3px;
+        }
+
+        .section-title::after {
+            content: "";
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: titleLine 3s infinite ease-in-out;
+        }
+
+        @keyframes titleLine {
+            0%, 100% { width: 80px; }
+            50% { width: 150px; }
+        }
+
+        .contact-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .contact-item {
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 2.5rem 2rem;
+            border-radius: 8px;
+            transition: all 0.4s ease;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .contact-item:hover::before {
+            left: 100%;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px);
+            border-color: #fff;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.8);
+        }
+
+        /* 平台圖標樣式 */
+        .platform-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.4s ease;
+        }
+
+        .platform-icon img {
+            width: 40px;
+            height: 40px;
+            filter: invert(100%); /* 將圖標轉為白色，匹配黑白風格 */
+            transition: transform 0.4s ease;
+        }
+
+        .contact-item:hover .platform-icon {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .contact-item:hover .platform-icon img {
+            transform: rotate(10deg) scale(1.2);
+        }
+
+        .contact-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px dashed rgba(255,255,255,0.4);
+            padding-bottom: 0.8rem;
+            text-align: center;
+        }
+
+        /* 按鈕樣式 */
+        .contact-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 6px;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .contact-btn:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .contact-btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* 底部版權 */
+        .footer {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding: 2rem;
+            text-align: center;
+            font-size: 1rem;
+            background: rgba(0,0,0,0.8);
+            margin-top: 6rem;
+        }
+
+        .footer p {
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .footer p::before, .footer p::after {
+            content: "★";
+            margin: 0 10px;
+            opacity: 0.5;
+        }
+
+        /* 手機端適配 */
+        @media screen and (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.2rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-container {
+                gap: 0.8rem;
+            }
+
+            .brand-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo-text {
+                font-size: 1.8rem;
+            }
+
+            .nav-toggle {
+                display: block;
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .contact-container {
+                margin: 3rem auto;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .contact-item {
+                padding: 2rem 1.5rem;
+            }
+
+            .platform-icon {
+                width: 70px;
+                height: 70px;
+            }
+
+            .platform-icon img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .contact-btn {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景裝飾 -->
+    <div class="bg-decoration"></div>
+
+    <!-- 頂部導航 -->
+    <header class="header">
+        <div class="logo-container">
+            <!-- 品牌商標圖標 -->
+            <div class="brand-icon">
+                <img src="https://i.ibb.co/5WJNV5bm/590410951-17845685619611836-1067630566413141807-n.jpg" alt="KY Keyboard 品牌商標">
+            </div>
+            <!-- Logo文字 -->
+            <div class="logo-text">KY Keyboard</div>
+        </div>
+        <div class="nav-toggle">☰</div>
+    </header>
+
+    <!-- 聯繫信息區域 -->
+    <section class="contact-container">
+        <h2 class="section-title">聯繫我們</h2>
+        <div class="contact-list">
+            <!-- Facebook -->
+            <div class="contact-item">
+                <div class="platform-icon">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook圖標">
+                </div>
+                <h3>Facebook 粉絲專頁</h3>
+                <a href="https://www.facebook.com/profile.php?id=61585252340847" target="_blank" class="contact-btn">
+                    前往粉絲專頁
+                </a>
+            </div>
+
+            <!-- Instagram -->
+            <div class="contact-item">
+                <div class="platform-icon">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram圖標">
+                </div>
+                <h3>Instagram 帳號</h3>
+                <a href="https://www.instagram.com/ky_key_board/" target="_blank" class="contact-btn">
+                    追蹤Instagram
+                </a>
+            </div>
+
+            <!-- 電子郵件 -->
+            <div class="contact-item">
+                <div class="platform-icon">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg" alt="Gmail圖標">
+                </div>
+                <h3>電子郵件</h3>
+                <a href="mailto:kykeyboardky@gmail.com" class="contact-btn">
+                    發送郵件聯繫
+                </a>
+            </div>
+
+            <!-- DISCORD -->
+            <div class="contact-item">
+                <div class="platform-icon">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord圖標">
+                </div>
+                <h3>DISCORD 社群</h3>
+                <a href="https://discord.gg/8y4zHSWP8r" target="_blank" class="contact-btn">
+                    加入Discord社群
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部版權 -->
+    <footer class="footer">
+        <p>© 2025 KY Keyboard. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
